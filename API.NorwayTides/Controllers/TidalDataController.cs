@@ -1,6 +1,7 @@
 ﻿using API.NorwayTides.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace API.NorwayTides.Controllers
 {
@@ -16,17 +17,18 @@ namespace API.NorwayTides.Controllers
         }
 
         [HttpGet("AvailableHarbors")]
-        public async Task<ActionResult<List<string>>> GetAvailableHarbors()
+        public async Task<IResult> GetAvailableHarbors()
         {
             try
             {
                 var harbors = await _tidalDataService.GetAvailableHarborsAsync();
-                return Ok(harbors);
+                return TypedResults.Json(harbors);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error occured: {ex}");
-                return StatusCode(500, "An error occurred while fetching available harbors.");
+                return TypedResults.Json(new { error = "An error occurred while fetching available harbors."}, statusCode: 500);
+
             }
         }
     }

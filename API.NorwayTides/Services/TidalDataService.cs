@@ -34,7 +34,7 @@ namespace API.NorwayTides.Services
 
             var harborsAvailable = JsonConvert.DeserializeObject<List<HarborAvailable>>(content, jsonSerializerSettings);
 
-            return harborsAvailable?.Select(ha => ha.Params.Harbor).ToList() ?? new List<string>();
+            return harborsAvailable is null ? [] : [.. harborsAvailable.Select(ha => ha.Params.Harbor)];
         }
     }
 }
