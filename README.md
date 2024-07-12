@@ -21,7 +21,7 @@
 
 - [x] Create new .NET Core API project
 - [x] Create folder structure (Controllers, Models, Services, DTOs, Helpers, etc.)
-- [ ] Configure intial project settings in appsettings.json
+- [x] Configure intial project settings in appsettings.json
 - [ ] Implement API data fetching service
 - [ ] Develop text parser for converting plain/text data to JSON
 - [ ] Create API endpoints in controller
