@@ -12,18 +12,20 @@
 
 ### 1. Project Setup
 
-- [ ] Create GitHub repository
-- [ ] Set up folders
-- [ ] Create initial README.md
-- [ ] Invite collaborators
+- [x] Create GitHub repository
+- [x] Set up folders
+- [x] Create initial README.md
+- [x] Invite collaborators
 
 ### 2. Backend Development (.NET Core API)
 
-- [ ] Create new .NET Core API project
-- [ ] Create folder structure (Controllers, Models, Services, DTOs, Helpers, etc.)
+- [x] Create new .NET Core API project
+- [x] Create folder structure (Controllers, Models, Services, DTOs, Helpers, etc.)
 - [ ] Configure intial project settings in appsettings.json
 - [ ] Implement API data fetching service
 - [ ] Develop text parser for converting plain/text data to JSON
 - [ ] Create API endpoints in controller
 - [ ] Implement DTOs for API respons
 - [ ] Implement error handeling and logging
+
+### 3. Frontend Development (React)
