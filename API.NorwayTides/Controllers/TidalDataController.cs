@@ -17,17 +17,17 @@ namespace API.NorwayTides.Controllers
         }
 
         [HttpGet("AvailableHarbors")]
-        public async Task<IResult> GetAvailableHarbors()
+        public async Task<IActionResult> GetAvailableHarbors()
         {
             try
             {
                 var harbors = await _tidalDataService.GetAvailableHarborsAsync();
-                return TypedResults.Json(harbors);
+                return Ok(harbors);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error occured: {ex}");
-                return TypedResults.Json(new { error = "An error occurred while fetching available harbors."}, statusCode: 500);
+                return StatusCode(500, "An error occurred while fetching available harbors.");
 
             }
         }

@@ -19,7 +19,7 @@ namespace API.NorwayTides.Services
 
         public async Task<List<string>> GetAvailableHarborsAsync()
         {
-            var response = await _httpClient.GetAsync($"{_baseUrl}available.json");
+            var response = await _httpClient.GetAsync($"{_baseUrl}values?param=harbor");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -27,9 +27,7 @@ namespace API.NorwayTides.Services
             }
 
             var content = await response.Content.ReadAsStringAsync();
-            var harborsAvailable = JsonConvert.DeserializeObject<List<HarborAvailable>>(content);
-
-            return harborsAvailable is null ? [] : [..harborsAvailable.Select(ha => ha.Params.Harbor)];
+            return JsonConvert.DeserializeObject<List<string>>(content);
         }
     }
 }
