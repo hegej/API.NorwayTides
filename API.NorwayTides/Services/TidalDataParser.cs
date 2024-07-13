@@ -27,12 +27,10 @@ namespace API.NorwayTides.Services
 
                         var tidalData = new TidalData
                         {
-                            Timestamp = new DateTime(
-                                int.Parse(parts[0]),    
-                                int.Parse(parts[1]),    
-                                int.Parse(parts[2]),    
-                                int.Parse(parts[3]),    
-                                0, 0),                  
+                            Year = int.Parse(parts[0]),
+                            Month = int.Parse(parts[1]),
+                            Day = int.Parse(parts[2]),
+                            Hour = int.Parse(parts[3]),
                             PrognosisLength = int.Parse(parts[4]),
                             Surge = double.Parse(parts[5], CultureInfo.InvariantCulture),
                             Tide = double.Parse(parts[6], CultureInfo.InvariantCulture),

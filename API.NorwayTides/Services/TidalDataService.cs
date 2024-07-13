@@ -21,20 +21,23 @@ namespace API.NorwayTides.Services
 
         public async Task<List<string>> GetAvailableHarborsAsync()
         {
-            var response = await _httpClient.GetAsync($"{_baseUrl}values?param=harbor");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<List<string>>(content) ?? new List<string>();
+            return await SendRequestAsync<List<string>>($"{_baseUrl}values?param=harbor",
+                content => JsonConvert.DeserializeObject<List<string>>(content) ?? new List<string>());
         }
 
         public async Task<List<TidalData>> GetHarborDataAsync(string harbourName)
         {
-            var response = await _httpClient.GetAsync($"{_baseUrl}?harbor={harbourName}");
+            return await SendRequestAsync<List<TidalData>> ($"{_baseUrl}?harbor={harbourName}",
+                content => _parser.ParseTidalData(content));
+        }
+
+        private async Task<T> SendRequestAsync<T>(string url, Func<string, T> processContent)
+        {
+            var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
 
-            return _parser.ParseTidalData(content);
+            return processContent(content);
         }
     }
 }
