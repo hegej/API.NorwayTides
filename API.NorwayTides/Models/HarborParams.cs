@@ -1,10 +1,16 @@
-﻿namespace API.NorwayTides.Models
+﻿using System.Text.Json.Serialization;
+
+namespace API.NorwayTides.Models
 {
     public class HarborParams
     {
-        public string content_type { get; set; }
-        public string datatype { get; set; }
+        [JsonPropertyName("content_type")]
+        public string ContentType { get; set; }
+        
+        [JsonPropertyName("datatype")]
+        public string DataType { get; set; }
+       
+        [JsonPropertyName("harbor")]
         public string Harbor { get; set; }
-
     }
 }

@@ -20,21 +20,16 @@ namespace API.NorwayTides.Services
         public async Task<List<string>> GetAvailableHarborsAsync()
         {
             var response = await _httpClient.GetAsync($"{_baseUrl}available.json");
+
             if (!response.IsSuccessStatusCode)
             {
                 throw new HttpRequestException($"Failed to fetch data. Status code: {response.StatusCode}");
             }
 
             var content = await response.Content.ReadAsStringAsync();
+            var harborsAvailable = JsonConvert.DeserializeObject<List<HarborAvailable>>(content);
 
-            var jsonSerializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
-            var harborsAvailable = JsonConvert.DeserializeObject<List<HarborAvailable>>(content, jsonSerializerSettings);
-
-            return harborsAvailable is null ? [] : [.. harborsAvailable.Select(ha => ha.Params.Harbor)];
+            return harborsAvailable is null ? [] : [..harborsAvailable.Select(ha => ha.Params.Harbor)];
         }
     }
 }
