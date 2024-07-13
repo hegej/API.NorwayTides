@@ -22,10 +22,10 @@
 - [x] Create new .NET Core API project
 - [x] Create folder structure (Controllers, Models, Services, DTOs, Helpers, etc.)
 - [x] Configure intial project settings in appsettings.json
-- [ ] Implement API data fetching service
-- [ ] Develop text parser for converting plain/text data to JSON
-- [ ] Create API endpoints in controller
-- [ ] Implement DTOs for API respons
+- [x] Implement API data fetching service
+- [x] Develop text parser for converting plain/text data to JSON
+- [x] Create API endpoints in controller
+- [ ] Implement DTOs for API respons (consider if needed)
 - [ ] Implement error handeling and logging
 
 ### 3. Frontend Development (React)

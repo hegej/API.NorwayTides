@@ -3,6 +3,6 @@
 
     public class APISettings
     {
-        public string APIBaseUrl { get; set; }
+        public string BaseUrl { get; set; }
     }
 }
