@@ -12,6 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<TidalDataService>();
 
+builder.Services.AddSingleton<TidalDataParser>();
+
 builder.Services.Configure<APISettings>(
     builder.Configuration.GetSection("APISettings"));
 
