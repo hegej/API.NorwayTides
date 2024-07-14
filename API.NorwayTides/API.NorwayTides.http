@@ -1,6 +1,0 @@
-@API.NorwayTides_HostAddress = http://localhost:5023
-
-GET {{API.NorwayTides_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
