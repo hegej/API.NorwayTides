@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using API.NorwayTides.Configuration;
+﻿using API.NorwayTides.Configuration;
 using API.NorwayTides.Models;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace API.NorwayTides.Services
 {
@@ -27,7 +26,7 @@ namespace API.NorwayTides.Services
 
         public async Task<List<TidalData>> GetHarborDataAsync(string harbourName)
         {
-            return await SendRequestAsync<List<TidalData>> ($"{_baseUrl}?harbor={harbourName}",
+            return await SendRequestAsync<List<TidalData>>($"{_baseUrl}?harbor={harbourName}",
                 content => _parser.ParseTidalData(content));
         }
 

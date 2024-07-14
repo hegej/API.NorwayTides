@@ -1,6 +1,5 @@
 ﻿using API.NorwayTides.Models;
 using System.Globalization;
-using System.Linq.Expressions;
 
 namespace API.NorwayTides.Services
 {
@@ -8,7 +7,8 @@ namespace API.NorwayTides.Services
     {
         public List<TidalData> ParseTidalData(string rawData)
         {
-            try{
+            try
+            {
                 var lines = rawData.Split('\n');
                 var tidalDataList = new List<TidalData>();
 
