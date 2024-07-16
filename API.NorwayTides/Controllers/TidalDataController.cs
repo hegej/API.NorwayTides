@@ -1,10 +1,12 @@
 ﻿using API.NorwayTides.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace API.NorwayTides.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [EnableCors("AllowAllOrigins")]
     public class TidalDataController : ControllerBase
     {
         private readonly TidalDataService _tidalDataService;
