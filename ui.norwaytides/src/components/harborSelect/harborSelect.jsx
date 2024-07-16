@@ -1,5 +1,5 @@
 import React from 'react';
-import harbors from '../data/harbors.json';
+import harbors from '../../data/harbors.json';
 
 function HarborSelector({ onSelectHarbor }) {
     console.log('Rendering HarborSelector');
