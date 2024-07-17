@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Cors;
 namespace API.NorwayTides.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/tidaldata")]
     [EnableCors("AllowAllOrigins")]
     public class TidalDataController : ControllerBase
     {
@@ -32,7 +32,7 @@ namespace API.NorwayTides.Controllers
             }
         }
 
-        [HttpGet("Harbor/{harborName}")]
+        [HttpGet("harbor/{harborName}")]
         public async Task<IActionResult> GetHarborData(string harborName)
         {
             try

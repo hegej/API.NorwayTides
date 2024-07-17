@@ -1,0 +1,52 @@
+.tide-chart-container {
+  position: relative;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  height: 600px !important;
+  width: 95vw !important;
+  max-width: 800px !important;
+}
+
+.axis-labels {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 8rem 2rem;
+}
+
+.x-axis-label {
+  position: absolute;
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.y-axis-label {
+  position: absolute;
+  left: 1%;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: left center;
+}
+
+.harbor-search-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.harbor-search-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

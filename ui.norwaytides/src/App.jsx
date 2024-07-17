@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HarborSelector from './components/HarborSelector';
-import TidalChart from './components/TidalChart';
+import React, { useState, useEffect } from 'react';
+import HarborSelect from './components/harborSelect/harborSelect';
+import TideChart from './components/tideChart/tideChart';
+import { capitalize } from './utils/stringUtils';
+import './App.css';
 
-function App() {
-    const [selectedHarbor, setSelectedHarbor] = useState('');
-
-    return (
-        <div className="App">
-            <h1>Norway Tides</h1>
-            <HarborSelector onSelectHarbor={setSelectedHarbor} />
-            {selectedHarbor && <p>Selected Harbor: {selectedHarbor}</p>}
-            <TidalChart data={tidalData} />
-        </div>
-    );
-
-    console.log('Tidal data:', tidalData);
-}
+const App = () => {
+  const [selectedHarbor, setSelectedHarbor] = useState('');
+  
+  return (
+    <div className="main-container">
+      <h1 className="main-heading">Tides of Norway</h1>
+      <HarborSelect onSelect={setSelectedHarbor} />
+      <div className="mt-4">
+        <h2 className="sub-heading">
+          Selected harbor: {selectedHarbor ? capitalize(selectedHarbor) : 'none'}
+        </h2>
+        <TideChart harborName={selectedHarbor || 'none'} />
+      </div>
+    </div>
+  );
+};
 
 export default App;

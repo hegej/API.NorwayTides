@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 /* eslint-disable max-len */
 const colors = require('tailwindcss/colors');
+
 module.exports = {
   content: [
     "./index.html",

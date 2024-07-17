@@ -1,17 +1,43 @@
-import React from 'react';
-import harbors from '../../data/harbors.json';
+import React, { useState, useEffect } from "react";
+import { SearchSelect, SearchSelectItem } from "@tremor/react";
+import { getAvailableHarbors } from "../../Api";
+import { capitalize } from '../../utils/stringUtils';
+import "./harborSelect.css";
 
-function HarborSelector({ onSelectHarbor }) {
-    console.log('Rendering HarborSelector');
-
-    return (
-        <select onChange={(e) => onSelectHarbor(e.target.value)}>
-            <option value="">Select a harbor</option>
-            {harbors.map(harbor => (
-                <option key={harbor} value={harbor}>{harbor}</option>
-            ))}
-        </select>
+const HarborSelect = ({ onSelect }) => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [harbors, setHarbors] = useState([]);
+  
+    useEffect(() => {
+      const fetchHarbors = async () => {
+        const data = await getAvailableHarbors();
+        setHarbors(data);
+      };
+  
+      fetchHarbors();
+    }, []);
+  
+    const filteredHarbors = harbors.filter(harbor =>
+      harbor.toLowerCase().startsWith(searchTerm.toLowerCase())
     );
-}
-
-export default HarborSelector;
+  
+    return (
+      <div className="harbor-select-wrapper">
+        <SearchSelect
+          placeholder="Search for harbor"
+          onValueChange={(value) => {
+            setSearchTerm(value);
+            onSelect(value);
+          }}
+        >
+          {filteredHarbors.map((harbor, index) => (
+            <SearchSelectItem key={index} value={harbor}>
+              {capitalize(harbor)}
+            </SearchSelectItem>
+          ))}
+        </SearchSelect>
+      </div>
+    );
+  };
+  
+  export default HarborSelect;

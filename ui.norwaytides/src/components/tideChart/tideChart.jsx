@@ -1,30 +1,92 @@
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useState, useEffect } from 'react';
+import { LineChart, Select, SelectItem } from '@tremor/react';
+import { getTideDataForHarbor } from '../../Api';
+import './tideChart.css';
 
-function TidalChart({ data }) {
-    console.log('Data received in TidalChart:', data);
+const TideChart = ({ harborName = '' }) => {
+  const [tideData, setTideData] = useState([]);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [availableDates, setAvailableDates] = useState([]);
 
-    const formattedData = data.map(item => ({
-        ...item,
-        timestamp: `${item.Year}-${item.Month.toString().padStart(2, '0')}-${item.Day.toString().padStart(2, '0')} ${item.Hour.toString().padStart(2, '0')}:00`
-    }));
+  const emptyChartData = Array.from({ length: 24 }, (_, i) => ({
+    Hour: i,
+    Surge: null,
+    Tide: null,
+    Total: null
+  }));
 
-    return (
-        <div style={{ width: '100%', height: 400 }}>
-            <ResponsiveContainer>
-                <LineChart data={formattedData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="timestamp" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="Surge" stroke="#8884d8" />
-                    <Line type="monotone" dataKey="Tide" stroke="#82ca9d" />
-                    <Line type="monotone" dataKey="Total" stroke="#ffc658" />
-                </LineChart>
-            </ResponsiveContainer>
-        </div>
-    );
-}
+  useEffect(() => {
+    const fetchTideData = async () => {
+      if (harborName && harborName !== 'none') {
+        const data = await getTideDataForHarbor(harborName);
+        setTideData(data);
+        
+        const dates = [...new Set(data.map(item => `${item.Day}.${item.Month}`))]
+          .sort((a, b) => {
+            const [dayA, monthA] = a.split('.');
+            const [dayB, monthB] = b.split('.');
+            return new Date(2024, monthA - 1, dayA) - new Date(2024, monthB - 1, dayB);
+          });
+        setAvailableDates(dates);
+        setSelectedDate(''); 
+      } else {
+        setTideData([]);
+        setAvailableDates([]);
+        setSelectedDate('');
+      }
+    };
 
-export default TidalChart;
+    fetchTideData();
+  }, [harborName]);
+
+  const filteredData = harborName
+    ? (selectedDate
+        ? tideData.filter(item => `${item.Day}.${item.Month}` === selectedDate)
+        : tideData)
+    : emptyChartData;
+
+  const valueFormatter = (number) => number !== null ? `${number.toFixed(2)} m` : '';
+
+  return (
+    <div className="tide-chart-container">
+      {harborName && (
+        <Select
+          className="mb-4"
+          placeholder="Select Date"
+          value={selectedDate}
+          onValueChange={setSelectedDate}
+        >
+          <SelectItem value="">All Dates</SelectItem>
+          {availableDates.map(date => (
+            <SelectItem key={date} value={date}>
+              {date}
+            </SelectItem>
+          ))}
+        </Select>
+      )}
+      <LineChart
+        className="tide-chart"
+        data={filteredData}
+        index="Hour"
+        categories={['Surge', 'Tide', 'Total']}
+        colors={['blue', 'green', 'red']}
+        valueFormatter={valueFormatter}
+        yAxisWidth={65}
+        showLegend={true}
+        showXAxis={true}
+        showYAxis={true}
+        showGridLines={true}
+        showAnimation={true}
+        enableLegendSlider={true}
+        startEndOnly={false}
+        connectNulls={true}
+      />
+      <div className="axis-labels">
+        <span className="x-axis-label">Hour of Day</span>
+        <span className="y-axis-label">Water Level (m)</span>
+      </div>
+    </div>
+  );
+};
+
+export default TideChart;
