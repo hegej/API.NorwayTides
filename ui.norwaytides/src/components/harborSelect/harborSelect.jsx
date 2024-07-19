@@ -24,7 +24,7 @@ const HarborSelect = ({ onSelect }) => {
     return (
       <div className="harbor-select-wrapper">
         <SearchSelect
-          placeholder="Search for harbor"
+          placeholder="Search for a harbor..."
           onValueChange={(value) => {
             setSearchTerm(value);
             onSelect(value);
