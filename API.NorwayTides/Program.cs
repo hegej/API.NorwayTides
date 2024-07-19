@@ -6,6 +6,10 @@ using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
@@ -14,10 +18,10 @@ builder.Services.AddControllers()
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<TidalDataService>();
-
 builder.Services.AddSingleton<TidalDataParser>();
 
 builder.Services.Configure<APISettings>(
